@@ -9,7 +9,7 @@ This project is built using Python/Django for the backend and ReactJs for the fr
 
 ### 1. Install Dependencies
 Ensure you have **python**, **pip**, **Node.js** and **npm** installed on your system.
-Inside the `dj-backend` directory (navigate into it by running the command: `cd dj-backend`):
+#### Inside the `dj-backend` directory (navigate into it by running the command: `cd dj-backend`):
   - Create a virtual environment:
 ```bash
 python -m venv venv
@@ -44,17 +44,22 @@ OR, you can specify the port number
 py manage.py runserver 9000
 ```
 
-the server will be started on the default port of 8000, or on the specified port(9000, for example)
+the backend server will be started on the default port of 8000, or on the specified port(9000, for example)
 open the admin on the browser at `http://127.0.0.1:8000/admin/`
 
-### 3. Run the Development Server
-Once the dependencies are installed, you can start the Vue development server:
+
+#### Inside the `react-frontend` directory (navigate into it by running the command: `cd react-frontend`):
+  - Run the following command to install the dependencies for the backend and start the backend server:
+```bash
+npm i
+```
+
+  - Run the following to create admin:
 ```bash
 npm run dev
 ```
-This will start the application at `http://localhost:3000/`.
+The frontend server will be started at `http://localhost:5173/`.
 
-Visit [the preview of the application here](https://okoye-victor-chibuzo-lendsqr-fe-test.vercel.app/) .
 
 More information in the `PROJECT_DOCUMENTATION.md` file.
 
