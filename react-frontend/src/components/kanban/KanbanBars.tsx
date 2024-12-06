@@ -42,7 +42,7 @@ const KanbanBars = () => {
   }, []);
 
 
-// Assuming `tasks` is a state array holding all tasks
+// Assuming `allTasks` is a state array holding all tasks
 const handleTaskDrop = async (taskId: number, newStatus: string) => {
     try {
         const allTasks = await fetchTasks();
@@ -102,8 +102,8 @@ const handleTaskDrop = async (taskId: number, newStatus: string) => {
    // Delete task handler
    const handleDeleteTask = async (taskId: number) => {
     try {
-      await deleteTask(taskId);  // Call the service to delete the task
-      setFetchedTasks((fetchedTasks) => fetchedTasks.filter((task) => task.id !== taskId));  // Remove the task from the state immediately
+      await deleteTask(taskId);
+      setFetchedTasks((fetchedTasks) => fetchedTasks.filter((task) => task.id !== taskId));
     //   console.log(tasks);
     } catch (error) {
       console.error('Error deleting task:', error);
@@ -111,12 +111,11 @@ const handleTaskDrop = async (taskId: number, newStatus: string) => {
   };
 
 
-    const query = useQuery();
-    const productId = query.get('id');
-    const parsedProductId = productId ? Number(productId) : null;
-      console.log(parsedProductId);
-    //   console.log(typeof parsedProductId);
-
+  const query = useQuery();
+  const productId = query.get('id');
+  const parsedProductId = productId ? Number(productId) : null;
+    // console.log(parsedProductId);
+    
 
   return (
     <div className="mt-6 flex gap-6 flex-wrap">
@@ -133,8 +132,11 @@ const handleTaskDrop = async (taskId: number, newStatus: string) => {
                 }),
               }));
 
-          // Filter tasks based on the status of the current Kanban bar
-          const filteredTasks = fetchedTasks.filter(task => task.status === bar.title);
+
+              // Filter tasks based on the project they belong to
+              const projectTasks = fetchedTasks.filter(task => task.project === parsedProductId);
+              // Filter tasks based on the status of the current Kanban bar
+          const filteredTasks = projectTasks.filter(task => task.status === bar.title);
 
           return (
             <div ref={drop} key={bar.id} className={`kanban-bar ${isOver ? 'bg-blue-100' : 'bg-[#F0F4F4]'} w-[23%] h-fit bg-[#F0F4F4] p-2 shadow-sm rounded-2xl flex justify-between items-start mb-4 pb-16`}>

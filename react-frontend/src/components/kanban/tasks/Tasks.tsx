@@ -5,14 +5,18 @@ import { useEffect, useState } from "react";
 import KanbanBars from "../KanbanBars";
 import axios from "axios";
 import { Project, User } from "../../../utils/types";
+import { useLocation } from "react-router-dom";
+import { Add, Person } from "@mui/icons-material";
 
+
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
 
 const Tasks = () => {
   const [openModal, setOpenModal] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [availableTeamMembers, setAvailableTeamMembers] = useState<User[]>([]);
-  const [teamMembers, setTeamMembers] = useState<User[]>([]);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null); // Track the current project
 
   useEffect(() => {
     const getData = async () => {
@@ -30,26 +34,6 @@ const Tasks = () => {
     getData();
   }, []);
 
-  useEffect(() => {
-    if (selectedProject) {
-      const projectMembers = availableTeamMembers.filter((member) =>
-        selectedProject.team_members.includes(member.id)
-      );
-      setTeamMembers(projectMembers);
-    }
-  }, [selectedProject, availableTeamMembers]);
-
-  useEffect(() => {
-    const huntProject = projects.find(
-      (project) => project.name === "Maneja - Event Management App"
-      // (project) => project.name === "Hunt - Job Application Assistant"
-      // (project) => project.name === "Lovell - Relationship Coach-Assistant"
-    );
-    if (huntProject) {
-      setSelectedProject(huntProject);
-    }
-  }, [projects]);
-
 
   // Function to open the modal
   const handleOpenModal = () => {
@@ -62,24 +46,36 @@ const Tasks = () => {
   };
 
 
+  // Get the Current Project
+  const query = useQuery();
+  const productId = query.get('id');
+  const parsedProductId = productId ? Number(productId) : null;
+  const currentProject = projects.find((project) => project.id === parsedProductId);
+  // console.log(currentProject);
+
+  
+  // Get the team members of the current project
+  const filteredTeamMembers = availableTeamMembers.filter(teamMember => currentProject?.team_members.includes(teamMember.id));
+  // console.log(filteredTeamMembers);
+
   return (
     <section className="relative flex bg-white">
       <AdminSidebar />
       <div className="w-full lg:w-4/5 min-h-screen pb-16">
         <AdminNavbar />
-        <section className="px-4 md:px-12 pt-8">
+        <section className="px-4 md:px-8 pt-8">
           <div className="headArea flex flex-col md:flex-row items-center justify-between">
-            <div className="desc">
-              <h1 className="text-[#064f38] text-xl font-bold">Tasks</h1>
+            <div className="desc w-2/3">
+              <h1 className="text-[#064f38] text-xl font-bold">Tasks of "{currentProject?.name}"</h1>
               <p className="text-xs">
-                This is the project for my getting the Indian job. In no time.
+                {currentProject?.description}
               </p>
             </div>
-            <div className="flex items-center flex-col md:flex-row text-xs mt-3 md:mt-auto">
+            <div className="flex items-center w-1/3 flex-col md:flex-row text-xs mt-3 md:mt-auto">
               {/* Team Members Section */}
-              <div className="w-full flex items-center justify-between text-gray-600">
+              <div className="w-full flex items-center justify-end text-gray-600">
                 <div className="relative flex">
-                  {teamMembers.slice(0, 3).map((member, index) => (
+                  {filteredTeamMembers.slice(0, 3).map((member, index) => (
                     <img
                       key={member.id}
                       src={member.avatar}
@@ -92,22 +88,29 @@ const Tasks = () => {
                       }}
                     />
                   ))}
-                  {teamMembers.length > 3 && (
+                  {filteredTeamMembers.length > 3 && (
                     <div
                       className="rounded-full h-6 w-6 bg-gray-200 flex items-center justify-center z-20 text-xs text-gray-600"
                       style={{ left: `-${3 * 11}px`, position: "relative" }}
                     >
-                      +{teamMembers.length - 3}
+                      +{filteredTeamMembers.length - 3}
                     </div>
                   )}
                 </div>
               </div>
-              <button
-                className="w-full whitespace-nowrap md:w-auto flex items-center justify-center border-0 gap-2 text-[#064f38] hover:text-white bg-[#F0F4F4] hover:bg-[#064f38] rounded-[4px] py-[10px] px-[32px]"
-                onClick={handleOpenModal}
-              >
-                Add Task
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  className="w-full whitespace-nowrap md:w-auto flex items-center justify-center border-0 gap-2 text-[#064f38] font-semibold hover:text-white bg-[#F0F4F4] hover:bg-[#064f38] rounded-[4px] py-[10px] px-[15px]"
+                >
+                  <Person style={{fontSize: '15px'}}/> Invite Member
+                </button>
+                <button
+                  className="w-full whitespace-nowrap md:w-auto flex items-center justify-center border-0 gap-2 text-[#064f38] font-semibold hover:text-white bg-[#F0F4F4] hover:bg-[#064f38] rounded-[4px] py-[10px] px-[15px]"
+                  onClick={handleOpenModal}
+                >
+                  <Add style={{fontSize: '15px'}}/> Add Task
+                </button>
+              </div>
             </div>
           </div>
 

@@ -48,7 +48,7 @@ const KanbanCard: React.FC<KanbanCardProps> = ({ task, status, dateFormatter, on
   }
 
   return (
-    <div ref={drag} key={task.id} className={`bg-white shadow-sm rounded-xl ${isDragging ? 'opacity-50 border-4 border-dashed border-gray-600' : ''}`}>
+    <div ref={drag} key={task.id} className={`bg-white shadow-sm cursor-grab rounded-xl ${isDragging ? 'opacity-50 border-2 border-dashed border-gray-600' : ''}`}>
       <div className="px-2 w-full flex items-center justify-between">
         <div className={`rounded-md py-1 px-2 flex items-center gap-2 ${task.substatus === 'Not started' ? 'bg-pink-100' : task.substatus === 'In Research' ? 'bg-amber-100' : task.substatus === 'On Track' ? 'bg-purple-100' : 'bg-green-100'}`}>
           <span className={`w-2 h-2 rounded-full ${task.substatus === 'Not started' ? 'bg-pink-600' : task.substatus === 'In Research' ? 'bg-amber-600' : task.substatus === 'On Track' ? 'bg-purple-600' : 'bg-green-600'}`}></span>

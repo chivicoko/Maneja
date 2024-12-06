@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { TaskContext, TaskContextProps } from '../contexts/TaskContext'; // Import TaskContextProps
+import { TaskContext, TaskContextProps } from '../contexts/TaskContext';
 
 export const useTaskContext = (): TaskContextProps => {
     const context = useContext(TaskContext);
