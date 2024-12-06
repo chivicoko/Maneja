@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Task, Project, User } from '../../utils/types';
+import { Task } from '../../utils/types';
 import KanbanCard, { KanbanCardDragLayer } from './KanbanCard';
 import { IconButton } from '@mui/material';
 import { Add, MoreHoriz } from '@mui/icons-material';
 import { kanbanBarsData } from '../../utils/data';
-import { deleteTask, fetchProjects, fetchTasks, fetchUsers, updateTask } from '../../services/services';
+import { deleteTask, fetchTasks, updateTask } from '../../services/services';
 import { useDrop } from 'react-dnd';
 import { Toaster, toast } from 'react-hot-toast';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import TaskForm from './tasks/TaskForm';
 
 
 
@@ -18,21 +19,18 @@ const useQuery = () => {
   
 const KanbanBars = () => {
   const [fetchedTasks, setFetchedTasks] = useState<Task[]>([]);
-  const [availableProjects, setAvailableProjects] = useState<Project[]>([]);
-  const [availableTeamMembers, setAvailableTeamMembers] = useState<User[]>([]);
+  const [openModal, setOpenModal] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const [tasks, projects, users] = await Promise.all([
+        const [tasks] = await Promise.all([
           fetchTasks(),
-          fetchProjects(),
-          fetchUsers()
         ]);
 
         setFetchedTasks(tasks);
-        setAvailableProjects(projects);
-        setAvailableTeamMembers(users);
       } catch (e) {
         console.error(e);
       }
@@ -50,7 +48,6 @@ const handleTaskDrop = async (taskId: number, newStatus: string) => {
       // Find the task that was dragged
       const draggedTask = allTasks.find((task) => task.id === taskId);
     //   console.log(draggedTask);
-    //   console.log(allTasks);
       
       if (!draggedTask) return;
   
@@ -105,11 +102,37 @@ const handleTaskDrop = async (taskId: number, newStatus: string) => {
       await deleteTask(taskId);
       setFetchedTasks((fetchedTasks) => fetchedTasks.filter((task) => task.id !== taskId));
     //   console.log(tasks);
+      toast.success(`The task has been deleted!`, {
+        className: 'bounce-toast custom-toast react-hot-toast-icon w-fit',
+        icon: '🗑️',
+      });
     } catch (error) {
       console.error('Error deleting task:', error);
+      toast.error('Error deleting task!', {
+          className: 'bounce-toast',
+          icon: '❌',
+          style: {
+              background: '#1a202c',
+              color: '#fff',
+              padding: '16px',
+              fontSize: '16px',
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          },
+      });
     }
   };
+  
+  // Function to open the modal
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
 
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    navigate(0);
+  };
 
   const query = useQuery();
   const productId = query.get('id');
@@ -151,7 +174,7 @@ const handleTaskDrop = async (taskId: number, newStatus: string) => {
                     </span>
                   </div>
                   <div className="flex relative">
-                    <IconButton color="default">
+                    <IconButton color="default" onClick={handleOpenModal}>
                       <Add fontSize="small" />
                     </IconButton>
                     <IconButton color="default">
@@ -174,6 +197,13 @@ const handleTaskDrop = async (taskId: number, newStatus: string) => {
           );
         })
       }
+      
+      {/* Task Form */}
+      <TaskForm
+        openModal={openModal}
+        handleOpenModal={handleOpenModal}
+        handleCloseModal={handleCloseModal}
+      />
     </div>
   );
 };

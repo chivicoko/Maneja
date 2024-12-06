@@ -1,12 +1,11 @@
 import AdminNavbar from "../../admin/AdminNavbar";
 import AdminSidebar from "../../admin/AdminSidebar";
-import TaskForm from "./TaskForm";
 import { useEffect, useState } from "react";
 import KanbanBars from "../KanbanBars";
 import axios from "axios";
 import { Project, User } from "../../../utils/types";
 import { useLocation } from "react-router-dom";
-import { Add, Person } from "@mui/icons-material";
+import { Person } from "@mui/icons-material";
 
 
 const useQuery = () => {
@@ -14,7 +13,6 @@ const useQuery = () => {
 };
 
 const Tasks = () => {
-  const [openModal, setOpenModal] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [availableTeamMembers, setAvailableTeamMembers] = useState<User[]>([]);
 
@@ -33,18 +31,6 @@ const Tasks = () => {
     };
     getData();
   }, []);
-
-
-  // Function to open the modal
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
-  // Function to close the modal
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-
 
   // Get the Current Project
   const query = useQuery();
@@ -104,22 +90,9 @@ const Tasks = () => {
                 >
                   <Person style={{fontSize: '15px'}}/> Invite Member
                 </button>
-                <button
-                  className="w-full whitespace-nowrap md:w-auto flex items-center justify-center border-0 gap-2 text-[#064f38] font-semibold hover:text-white bg-[#F0F4F4] hover:bg-[#064f38] rounded-[4px] py-[10px] px-[15px]"
-                  onClick={handleOpenModal}
-                >
-                  <Add style={{fontSize: '15px'}}/> Add Task
-                </button>
               </div>
             </div>
           </div>
-
-          {/* Task Form */}
-          <TaskForm
-            openModal={openModal}
-            handleOpenModal={handleOpenModal}
-            handleCloseModal={handleCloseModal}
-          />
 
           {/* Task List */}
           <KanbanBars />

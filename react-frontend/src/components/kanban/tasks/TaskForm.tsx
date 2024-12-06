@@ -47,7 +47,7 @@ const TaskForm = ({ openModal, handleOpenModal, handleCloseModal }: TaskFormProp
         };
 
         getData();
-    }, [handleCloseModal]);
+    }, []);
 
     // Reset form fields
     const resetForm = () => {
@@ -87,9 +87,7 @@ const TaskForm = ({ openModal, handleOpenModal, handleCloseModal }: TaskFormProp
             handleCloseModal();
             resetForm();
         } catch (error) {
-            if (error instanceof Error) {
-                console.error("Error adding task:", error.response ? error.response.data : error.message);
-            }
+            console.error("Error adding task:", error);
             alert("Failed to add task. Please try again.");
         }
     };
@@ -99,6 +97,7 @@ const TaskForm = ({ openModal, handleOpenModal, handleCloseModal }: TaskFormProp
         if (title && description && project && teamMembers.length > 0 && dueDate && editingId !== null) {
             try {
                 const updatedTask: Task = {
+                    id: editingId,
                     title,
                     description,
                     project,
@@ -113,16 +112,18 @@ const TaskForm = ({ openModal, handleOpenModal, handleCloseModal }: TaskFormProp
                 const response = await updateTask(editingId, updatedTask);
                 setFetchedTasks((prevState) =>
                     prevState.map((task) =>
-                        task.id === editingId ? { ...task, ...updatedTask } : task
+                        task.id === editingId ? response : task
                     )
                 );  // Immediately reflect the updated task
                 handleCloseModal();
+                resetForm();
             } catch (error) {
                 console.error("Error updating task:", error);
+                alert("Failed to update task. Please try again.");
             }
         }
     };
-
+    
     return (
         <Dialog open={openModal} onClose={handleCloseModal} fullWidth className="custom-scrollbar" >
             <DialogTitle>{editingId === null ? "Add Task" : "Update Task"}</DialogTitle>

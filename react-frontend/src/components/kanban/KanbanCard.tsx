@@ -5,6 +5,7 @@ import { Task, User } from '../../utils/types';
 import { fetchUsers } from '../../services/services';
 import { useDrag, useDragLayer } from 'react-dnd';
 import { locallyAssignedMembers } from '../../utils/data';
+import TaskForm from './tasks/TaskForm';
 
 interface KanbanCardProps {
   task: Task;
@@ -14,7 +15,7 @@ interface KanbanCardProps {
 }
 
 const KanbanCard: React.FC<KanbanCardProps> = ({ task, status, dateFormatter, onDelete }) => {
-  
+  const [openModal, setOpenModal] = useState(false);
   const [teamMembers, setTeamMembers] = useState<User[]>([]);
   const [isToggled, setIsToggled] = useState(false);
 
@@ -46,6 +47,16 @@ const KanbanCard: React.FC<KanbanCardProps> = ({ task, status, dateFormatter, on
   if (task.status !== status) {
     return null;
   }
+  
+  // Function to open the modal
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <div ref={drag} key={task.id} className={`bg-white shadow-sm cursor-grab rounded-xl ${isDragging ? 'opacity-50 border-2 border-dashed border-gray-600' : ''}`}>
@@ -63,14 +74,14 @@ const KanbanCard: React.FC<KanbanCardProps> = ({ task, status, dateFormatter, on
                 <div className='absolute top-12 right-0 h-fit w-fit py-1 whitespace-nowrap shadow-2xl border-2 rounded-lg bg-slate-100 z-40'>
                     <ul>
                         <li className=''>
-                            <a href="#" className='py-1 px-4 flex items-center gap-2 text-gray-600 cursor-pointer hover:bg-slate-200'>
+                            <a href="#" className='py-1 px-4 flex items-center gap-2 text-gray-600 hover:text-gray-600 cursor-pointer hover:bg-slate-200'>
                                 <PreviewOutlined style={{width: '16px'}} /> View
                             </a>
                         </li>
                         <li className=''>
-                            <a href="#" className='py-1 px-4 flex items-center gap-2 text-gray-600 cursor-pointer hover:bg-slate-200'>
+                            <button onClick={handleOpenModal} className='w-full py-1 px-4 flex items-center gap-2 text-gray-600 cursor-pointer hover:bg-slate-200'>
                                 <Edit style={{width: '16px'}} /> Edit
-                            </a>
+                            </button>
                         </li>
                         <li className=''>
                             <button onClick={() => onDelete(task.id)} className='py-1 px-4 flex items-center gap-2 text-gray-600 cursor-pointer hover:bg-slate-200'>
@@ -126,6 +137,13 @@ const KanbanCard: React.FC<KanbanCardProps> = ({ task, status, dateFormatter, on
           </div>
         </div>
       </div>
+      
+      {/* Task Form */}
+      <TaskForm
+        openModal={openModal}
+        handleOpenModal={handleOpenModal}
+        handleCloseModal={handleCloseModal}
+      />
     </div>
   );
 };
