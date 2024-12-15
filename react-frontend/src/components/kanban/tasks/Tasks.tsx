@@ -1,11 +1,11 @@
-import AdminNavbar from "../../admin/AdminNavbar";
-import AdminSidebar from "../../admin/AdminSidebar";
+import Navbar from "../../admin/Navbar";
 import { useEffect, useState } from "react";
 import KanbanBars from "../KanbanBars";
 import axios from "axios";
 import { Project, User } from "../../../utils/types";
 import { useLocation } from "react-router-dom";
 import { Person } from "@mui/icons-material";
+import Sidebar from "../../sidebars/Sidebar";
 
 
 const useQuery = () => {
@@ -45,16 +45,16 @@ const Tasks = () => {
   // console.log(filteredTeamMembers);
 
   return (
-    <section className="relative flex bg-white">
-      <AdminSidebar />
+    <section className="relative m-0 flex bg-white">
+      <Sidebar project={currentProject?.name} />
       <div className="w-full lg:w-4/5 min-h-screen pb-16">
-        <AdminNavbar />
+        <Navbar />
         <section className="px-4 md:px-8 pt-8">
           <div className="headArea flex flex-col md:flex-row items-center justify-between">
             <div className="desc w-2/3">
-              <h1 className="text-[#064f38] text-xl font-bold">Tasks of "{currentProject?.name}"</h1>
+              <h1 className="text-blue-800 text-xl font-bold">{currentProject ? `Tasks of "${currentProject?.name}"` : "Project Page"}</h1>
               <p className="text-xs">
-                {currentProject?.description}
+                {currentProject ? `${currentProject?.description.slice(0,130)}...` : "Click a project on the sidebar to display its content here"}
               </p>
             </div>
             <div className="flex items-center w-1/3 flex-col md:flex-row text-xs mt-3 md:mt-auto">
@@ -84,13 +84,11 @@ const Tasks = () => {
                   )}
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <button
-                  className="w-full whitespace-nowrap md:w-auto flex items-center justify-center border-0 gap-2 text-[#064f38] font-semibold hover:text-white bg-[#F0F4F4] hover:bg-[#064f38] rounded-[4px] py-[10px] px-[15px]"
-                >
-                  <Person style={{fontSize: '15px'}}/> Invite Member
-                </button>
-              </div>
+              <button
+                className="w-full mr-5 whitespace-nowrap md:w-auto flex items-center justify-center border-0 gap-2 text-blue-800 font-semibold hover:text-white bg-[#F0F4F4] hover:bg-blue-800 rounded-md py-[10px] px-[15px]"
+              >
+                <Person style={{fontSize: '15px'}}/> Invite Member
+              </button>
             </div>
           </div>
 

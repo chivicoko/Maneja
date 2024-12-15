@@ -3,7 +3,7 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import React, { useState } from 'react';
 import { KeyboardArrowDown, Menu, NotificationsOutlined, Search } from '@mui/icons-material';
-import Sidebar from './AdminSidebar';
+import Sidebar from '../sidebars/Sidebar';
 import { Link } from 'react-router-dom';
 // import { ClerkLoaded, ClerkLoading, SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs';
 
@@ -25,20 +25,20 @@ const AdminNavbar: React.FC = () => {
               </div>
             </Link>
 
-            <button onClick={() => setOpen(!open)} className="lg:hidden text-gray-700 focus:outline-[#064f38]">
+            <button onClick={() => setOpen(!open)} className="lg:hidden text-gray-700 focus:outline-blue-800">
               <Menu />
             </button>
           </div>
 
           <div className="flex items-center gap-1 md:gap-3 w-4/5 md:px-2 md:w-2/5 justify-self-start">
-            <div className="px-1 bg-transparent border border-[#064f38] w-full flex items-center justify-between rounded-[4px] focus-within:ring-1 focus-within:ring-[#064f38] hover:ring-[#064f38]">
+            <div className="px-1 bg-transparent border border-blue-800 w-full flex items-center justify-between rounded-[4px] focus-within:ring-1 focus-within:ring-blue-800 hover:ring-blue-800">
               <input
                 type="text"
                 placeholder="Search..."
                 name="searchText"
                 className="bg-transparent w-full py-2 border-0 text-xs pl-1 focus:outline-0 focus:ring-0 placeholder:text-xs md:text-base text-[#666666] leading-tight"
               />
-              <button type="button" className="focus:outline-[#064f38]">
+              <button type="button" className="focus:outline-blue-800">
                 <span className="text-[#666666]"><Search className="h-4 w-4 md:h-6 md:w-6" /></span>
               </button>
             </div>
@@ -47,7 +47,7 @@ const AdminNavbar: React.FC = () => {
           </div>
 
           <div className="hidden md:w-2/5 md:flex items-center justify-end">
-            <button className="border-r-2 border-[#064f38] px-2 text-[#333333] bg-white border-none">
+            <button className="border-r-2 border-blue-800 px-2 text-[#333333] bg-white border-none">
               <NotificationsOutlined />
             </button>
             <Link to='/login' className=''> 
