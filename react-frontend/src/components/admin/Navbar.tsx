@@ -1,5 +1,3 @@
-'use client';
-
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import React, { useState } from 'react';
 import { KeyboardArrowDown, Menu, NotificationsOutlined, Search } from '@mui/icons-material';
@@ -16,7 +14,7 @@ const AdminNavbar: React.FC = () => {
 
   return (
     <>
-      <nav className="z-30 py-3 md:py-5 px-4 md:px-8 lg:px-[68px] border-b">
+      <nav className="z-30 py-3 md:py-5 px-4 md:px-6 md:pr-12 border-b">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start gap-2 md:gap-3 w-2/5 md:w-1/5 lg:hidden">
             <Link to="/" className="flex items-center justify-start lg:hidden gap-2">

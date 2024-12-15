@@ -17,7 +17,7 @@ const useQuery = () => {
   };
   
   
-const KanbanBars = () => {
+const TaskList = () => {
   const [fetchedTasks, setFetchedTasks] = useState<Task[]>([]);
   const [openModal, setOpenModal] = useState(false);
 
@@ -208,4 +208,4 @@ const handleTaskDrop = async (taskId: number, newStatus: string) => {
   );
 };
 
-export default KanbanBars;
+export default TaskList;

@@ -1,4 +1,3 @@
-'use client';
 
 import { Add, ArrowDropDownOutlined, KeyboardArrowDown, MoreVert, ShowChartOutlined, Tungsten } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -132,7 +131,7 @@ const ProjectSidebar: React.FC<SidebarProps> = ({ closeSidebar = () => {}, proje
                             <p className="text-xs text-gray-800 font-semibold"><span className='text-green-600 font-semibold'><ShowChartOutlined fontSize='small'/> 2.5%</span> from last week</p>
                         </div>
 
-                        <button className="text-xs font-semibold w-full border-2 border-dashed border-blue-800 text-blue-800 hover:text-white bg-transparent hover:bg-blue-800 hover:border-transparent rounded-md py-2 px-6">
+                        <button className="flex items-center justify-center text-sm font-semibold w-full border-2 border-dashed border-blue-800 text-blue-800 hover:text-white bg-transparent hover:bg-blue-800 hover:border-transparent rounded-md py-2 px-6">
                             <Add/> Add Project
                         </button>
                     </div>
