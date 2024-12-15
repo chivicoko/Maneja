@@ -18,7 +18,7 @@ const useQuery = () => {
   };
   
   
-const ProjectSidebar: React.FC<SidebarProps> = ({ closeSidebar = () => {}, project = {} }) => {
+const ProjectSidebar: React.FC<SidebarProps> = ({ closeSidebar = () => {}, project}) => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [availableTeamMembers, setAvailableTeamMembers] = useState<User[]>([]);
     const [projectTeamMembers, setProjectTeamMembers] = useState<User[]>([]);
@@ -52,7 +52,20 @@ const ProjectSidebar: React.FC<SidebarProps> = ({ closeSidebar = () => {}, proje
 
   // Get the Current Project
     const query = useQuery();
-    const productId = query.get('id');
+    const productQueryId = query.get('id');
+
+    const isProject = (productId: number | null) => {
+        if (!productId) return false;
+  
+        if (productQueryId) 
+            if (productId === +productQueryId) {
+                // console.log(productQueryId);
+            return +productQueryId === productId;
+        } else {
+            return +productQueryId === productId;
+        }
+    };
+  
 
     return (
             <div className="flex flex-col justify-start items-center transition-transform duration-200">
@@ -74,7 +87,7 @@ const ProjectSidebar: React.FC<SidebarProps> = ({ closeSidebar = () => {}, proje
                             <p className='text-black mb-3 font-semibold'>Projects</p>
                             <div className='w-full flex flex-col gap-2'>
                                 {projects.map(project => 
-                                <Link to={`/projects?id=${project.id}`} key={project.id} className={`'dd' ? "text-white bg-blue-800" : "text-[#455454]"} w-full flex items-center justify-between text-[#455454] hover:text-white hover:bg-blue-800 border-2 border-gray-300 hover:border-transparent rounded-md text-sm font-semibold group transition-all duration-200 ease-linear`}>
+                                <Link to={`/projects?id=${project.id}`} key={project.id} className={`${isProject(project.id) ? "text-white bg-blue-800" : "text-[#455454]"} w-full flex items-center justify-between text-[#455454] hover:text-white hover:bg-blue-800 border-2 border-gray-300 hover:border-transparent rounded-md text-sm font-semibold group transition-all duration-200 ease-linear`}>
                                     <button onClick={() => handleProjectSelect(project.id)} className="w-full py-2 pr-1 pl-2 text-sm flex items-center justify-between gap-2">
                                         <span className='flex items-center gap-1'>
                                             <span className=""><Tungsten fontSize='small' /></span>
@@ -89,7 +102,7 @@ const ProjectSidebar: React.FC<SidebarProps> = ({ closeSidebar = () => {}, proje
 
                         <div className='w-full mt-6'>
                             <p className='text-black mb-3 font-semibold'>Team members</p>
-                            {productId ? 
+                            {productQueryId ? 
                             <ul className="flex flex-col items-center gap-3 w-full">
                                 {projectTeamMembers.map(projectTeamMember => 
                                     <li key={projectTeamMember.id} className={`'dd' ? "text-white bg-blue-800" : "text-[#455454]"} w-full flex items-center justify-between text-[#455454] border-2 border-gray-300 hover:border-gray-500 py-1 pr-1 pl-2 rounded-md text-sm font-semibold group transition-all duration-300 ease-linear`}>

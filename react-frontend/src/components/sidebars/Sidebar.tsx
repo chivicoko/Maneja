@@ -6,9 +6,10 @@ import HomeSidebar from './HomeSidebar';
 
 interface SidebarProps {
   show?: string;
+  project?: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ show = 'hidden'}) => {
+const Sidebar: React.FC<SidebarProps> = ({ show = 'hidden', project}) => {
   // const [isModalOpen, setIsModalOpen] = useState(false);
   // const [modalMode, setModalMode] = useState<'view' | 'edit'>('view');
   
@@ -16,12 +17,15 @@ const Sidebar: React.FC<SidebarProps> = ({ show = 'hidden'}) => {
   const pathName = location.pathname;
 
   const menuItems = [
-    {id: 1, icon: <DashboardOutlined />, path: '/' },
-    {id: 2, icon: <WorkHistoryOutlined />, path: '/projects' },
-    {id: 3, icon: <MessageOutlined />, path: '/messages' },
-    {id: 4, icon: <CalendarMonthOutlined />, path: '/calendar' },
-    {id: 5, icon: <InsertChartOutlinedOutlined />, path: '/charts' },
-    {id: 6, icon: <HelpOutline />, path: '/help' },
+    {id: 1, icon: <DashboardOutlined />, path: '/', title: 'Your Dashboard' },
+    {id: 2, icon: <WorkHistoryOutlined />, path: '/projects', title: 'Available Projects' },
+    {id: 3, icon: <MessageOutlined />, path: '/messages', title: 'Your Messages/Chats' },
+    {id: 4, icon: <CalendarMonthOutlined />, path: '/calendar', title: 'Your Calendar' },
+    {id: 5, icon: <InsertChartOutlinedOutlined />, path: '/charts', title: 'Data Charts' },
+    {id: 6, icon: <HelpOutline />, path: '/help', title: 'Help Line' },
+    {id: 7, icon: <SettingsOutlined />, path: '/settings', title: 'Your Settings area' },
+    {id: 8, icon: <LogoutOutlined />, path: '/login', title: 'Logout from app' },
+    {id: 9, icon: <ShareOutlined />, path: '/share', title: 'Share with members' },
   ];
 
   const isActivePath = (route: string | null) => {
@@ -43,20 +47,20 @@ const Sidebar: React.FC<SidebarProps> = ({ show = 'hidden'}) => {
                   <img src="/images/logo.jpg" alt="Users profile picture" className='w-[42px] h-[42px] rounded-xl' />
               </Link>
               <div className="flex w-full h-full flex-col items-center justify-between mt-8">
-                  <ul className='p-0 w-full flex flex-col gap-5'>
-                      {menuItems.map(item => 
-                          <li key={item.id} className={`${isActivePath(item.path) ? "text-blue-800 border-blue-600 bg-[#afb6e190]" : "text-[#455454]"} py-2 px-4 border-l-4 border-transparent hover:border-blue-600 transition-all duration-200`}>
-                              <Link to={item.path} className="flex items-center gap-3">
-                                  <span className="">{item.icon}</span>
-                              </Link>
-                          </li>
+                  <div className='p-0 w-full flex flex-col gap-5'>
+                      {menuItems.slice(0, 6).map(item => 
+                        <Link to={item.path} key={item.id} title={item.title} className={`${isActivePath(item.path) ? "text-blue-800 border-blue-600 bg-[#afb6e190]" : "text-[#455454]"} py-2 px-4 border-l-4 border-transparent hover:border-blue-600 transition-all duration-200 flex items-center gap-3`}>
+                          <span className="">{item.icon}</span>
+                        </Link>
                       )}
-                  </ul>
-                  <ul className='p-0 w-full flex flex-col gap-4 pb-3'>
-                      <li className='py-2 px-4 border-l-4 border-transparent hover:border-blue-600 transition-all duration-300'><SettingsOutlined/></li>
-                      <li className='py-2 px-4 border-l-4 border-transparent hover:border-blue-600 transition-all duration-300'><LogoutOutlined/></li>
-                      <li className='py-2 px-4 border-l-4 border-transparent hover:border-blue-600 transition-all duration-300'><ShareOutlined/></li>
-                  </ul>
+                  </div>
+                  <div className='p-0 w-full flex flex-col gap-4 pb-3'>
+                    {menuItems.slice(6, menuItems.length).map(item => 
+                      <Link to={item.path} key={item.id} title={item.title} className={`${isActivePath(item.path) ? "text-blue-800 border-blue-600 bg-[#afb6e190]" : "text-[#455454]"} py-2 px-4 border-l-4 border-transparent hover:border-blue-600 transition-all duration-200 flex items-center gap-3`}>
+                        <span className="">{item.icon}</span>
+                      </Link>
+                    )}
+                  </div>
               </div>
           </div>
 
