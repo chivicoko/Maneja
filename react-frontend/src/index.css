@@ -85,7 +85,7 @@ button:focus-visible {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #708dea;
+  background: #4b70ec;
   border-radius: 8px;
   width: 2px;
   cursor: pointer;

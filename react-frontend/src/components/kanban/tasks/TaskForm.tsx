@@ -125,9 +125,9 @@ const TaskForm = ({ openModal, handleOpenModal, handleCloseModal }: TaskFormProp
     };
     
     return (
-        <Dialog open={openModal} onClose={handleCloseModal} fullWidth className="custom-scrollbar" >
+        <Dialog open={openModal} onClose={handleCloseModal} fullWidth className="" >
             <DialogTitle>{editingId === null ? "Add Task" : "Update Task"}</DialogTitle>
-            <DialogContent>
+            <DialogContent className="custom-scrollbar">
                 <TextField
                     label="Title"
                     value={title}

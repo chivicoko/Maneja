@@ -8,7 +8,7 @@ const Homeview = () => {
     <div className="w-full lg:w-4/5 min-h-screen pb-16">
       <AdminNavbar />
       <section className="px-4 md:px-8 pt-8">
-        <div>Homeview</div>
+        <div>Homeview</div>mm
       </section>
     </div>
   </section>

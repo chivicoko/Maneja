@@ -17,7 +17,7 @@ const useQuery = () => {
   };
   
   
-const ProjectSidebar: React.FC<SidebarProps> = ({ closeSidebar = () => {}, project}) => {
+const ProjectSidebar: React.FC<SidebarProps> = ({ closeSidebar = () => {} }) => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [availableTeamMembers, setAvailableTeamMembers] = useState<User[]>([]);
     const [projectTeamMembers, setProjectTeamMembers] = useState<User[]>([]);
