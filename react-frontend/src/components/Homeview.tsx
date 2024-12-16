@@ -6,7 +6,7 @@ import { Project, Task, User } from "../utils/types";
 import { Link, useLocation } from "react-router-dom";
 import { MoreVert, Tungsten } from "@mui/icons-material";
 import UsageChart from "./UsageChart";
-import { diagnosisHistory } from "../utils/data";
+import { UsageHistory } from "../utils/data";
 
 
 const useQuery = () => {
@@ -94,11 +94,7 @@ const isProject = (productId: number | null) => {
         </div>
 
         <div className="grid grid-cols-2 gap-6 pr-5">
-              <UsageChart data={diagnosisHistory}/>
-          {/* <div className="w-full p-4 pr-1 border rounded-lg">
-            <div className='w-full flex flex-col gap-2 h-[18rem]'>
-            </div>
-          </div> */}
+          <UsageChart data={UsageHistory}/>
           
           <div className="w-full p-4 pr-1 border rounded-lg">
             <div className='w-full flex flex-col gap-2 h-[18rem] overflow-auto custom-scrollbar pr-4'>
@@ -113,14 +109,6 @@ const isProject = (productId: number | null) => {
                   </span>
               </Link>
               )}
-              <div>&nbsp;</div>
-              <div>&nbsp;</div>
-              <div>&nbsp;</div>
-              <div>&nbsp;</div>
-              <div>&nbsp;</div>
-              <div>&nbsp;</div>
-              <div>&nbsp;</div>
-              <div>&nbsp;</div>
             </div>
           </div>
         </div>

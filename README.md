@@ -1,7 +1,7 @@
 
 # Maneja
 
-  This is an all-in-one project management application that provides access to all of the resources and the people that are involved in any project you have created. It makes task management a lot easier. You can easily create your own project, create tasks for the project from beginning to completion. And you can add team members for every project and every task just be dragging and dropping users into it; or by adding team members via the provided form. The same for swapping teams. Everything is draggable. It's made easy for all users.
+  This is an all-in-one project management application that provides access to all of the resources and the people that are involved in any project you have created. It makes task management a lot easier using features like the optional Kanban or tabular view. You can easily create your own project, create tasks for the project from beginning to completion. And you can add team members for every project and every task just be dragging and dropping users into it; or by adding team members via the provided form. The same for swapping teams. Everything is draggable. It's made seamless for all users.
 
 ## Project Setup
 
@@ -58,7 +58,7 @@ npm i
 ```bash
 npm run dev
 ```
-The frontend server will be started at `http://localhost:5173/`.
+The frontend server will be started at `http://localhost:5173/` or any other port it is served at in your local server.
 
 
 More information in the `PROJECT_DOCUMENTATION.md` file.

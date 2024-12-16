@@ -61,6 +61,6 @@ export interface KanbanColumnProps {
 
 export interface ChartData {
   monthYear: string;
-  systolic: number;
-  diastolic: number;
+  non_projects: number;
+  projects: number;
 }

@@ -13,7 +13,7 @@ export const locallyAssignedMembers = [
     { id: 3, avatar: "/images/Layer 10@2x.png" },
 ]
 
-export const diagnosisHistory = [
+export const UsageHistory = [
     { non_projects: 1, projects: 3, monthYear: 'Jan 2024' },
     { non_projects: 8, projects: 16, monthYear: 'Jun 2023' },
     { non_projects: 3, projects: 9, monthYear: 'May 2022' },
