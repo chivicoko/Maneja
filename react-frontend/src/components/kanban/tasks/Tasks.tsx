@@ -1,11 +1,12 @@
 import Navbar from "../../admin/Navbar";
 import { useEffect, useState } from "react";
-import KanbanBars from "../KanbanBars";
+import KanbanBars from "../taskkanban/KanbanBars";
 import axios from "axios";
 import { Project, User } from "../../../utils/types";
 import { useLocation } from "react-router-dom";
 import { Add, Person } from "@mui/icons-material";
 import Sidebar from "../../sidebars/Sidebar";
+import TaskList from "../tasktable/TaskList";
 
 
 const useQuery = () => {
@@ -54,16 +55,26 @@ const Tasks = () => {
   };
   
   const handleTaskKanbanDisplayFormatToggle = () => {
+    setTaskKanban(true);
     setProjectOverview(false);
     setTaskTable(false);
-    setTaskKanban(true);
   };
   
   const handleTaskTableDisplayFormatToggle = () => {
+    setTaskTable(true);
     setProjectOverview(false);
     setTaskKanban(false);
-    setTaskTable(true);
   };
+  
+  const dateFormatter = (date: string) => {
+    const newDate = new Date(date);
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    }).format(newDate);
+  };
+
 
   return (
     <section className="relative m-0 flex bg-white">
@@ -71,10 +82,10 @@ const Tasks = () => {
       <div className="w-full lg:w-4/5 min-h-screen pb-16">
         <Navbar />
         <section className="pt-8">
-          <div className="headArea px-4 md:px-8 flex flex-col gap-6">
-            <div className="headArea flex flex-col md:flex-row items-center justify-between">
+          <div className="headArea flex flex-col gap-6">
+            <div className="headArea px-4 md:px-8 flex flex-col md:flex-row items-center justify-between">
               <div className="desc w-2/3">
-                <h1 className="text-blue-800 text-xl font-bold">{currentProject ? `Tasks of "${currentProject?.name}"` : "Project Page"}</h1>
+                <h1 className="text-blue-800 text-xl font-bold">{currentProject ? `${currentProject?.name}` : "Project Page"}</h1>
                 <p className="text-xs">
                   {currentProject ? `${currentProject?.description.slice(0,130)}...` : "Click a project on the sidebar to display its content here"}
                 </p>
@@ -106,60 +117,79 @@ const Tasks = () => {
                     )}
                   </div>
                 </div>
-                <button
-                  className="w-full mr-5 whitespace-nowrap md:w-auto flex items-center justify-center border-0 gap-2 text-blue-800 font-semibold hover:text-white bg-[#F0F4F4] hover:bg-blue-800 rounded-md py-[10px] px-[15px]"
-                >
-                  <Person style={{fontSize: '15px'}}/> Invite Member
-                </button>
+                {currentProject ? 
+                  <button
+                    className="w-full mr-5 whitespace-nowrap md:w-auto flex items-center justify-center border-0 gap-2 text-blue-800 font-semibold hover:text-white bg-[#F0F4F4] hover:bg-blue-800 rounded-md py-[10px] px-[15px]"
+                  >
+                    <Person style={{fontSize: '15px'}}/> Invite Member
+                  </button>
+                : null}
               </div>
             </div>
 
             {currentProject ?
-            <div className="flex items-center justify-between">
+            <div className="px-4 md:px-8 flex items-center justify-between">
               <div className="">
                 <ul className="flex items-center gap-6">
                   <li className={`${projectOverview ? 'text-blue-800' : ''} "text-sm font-bold hover:text-blue-800 pr-5 pb- mb-0 border-r border-r-black"`}>
                     <button onClick={handleOverviewToggle} className="px-3 py-1 mb-0">Project Overview</button>
                   </li>
                   <li>
-                    <button onClick={handleTaskKanbanDisplayFormatToggle} className={`${taskKanban ? 'border-blue-800' : ''} "text-sm font-semibold border-b-2 border-transparent md:hover:border-blue-800 px-2 py-1 mb-0"`}>Tasks Kanban</button>
+                    <button onClick={handleTaskKanbanDisplayFormatToggle} className={`${taskKanban ? 'border-blue-800' : 'border-transparent'} "text-sm font-semibold border-b-2 md:hover:border-blue-800 px-2 py-1 mb-0"`}>
+                      Tasks Kanban
+                    </button>
                   </li>
                   <li>
-                    <button onClick={handleTaskTableDisplayFormatToggle} className={`${taskTable ? 'border-blue-800' : ''} "text-sm font-semibold border-b-2 border-transparent md:hover:border-blue-800 px-2 py-1 mb-0"`}>Tasks Table</button>
+                    <button onClick={handleTaskTableDisplayFormatToggle} className={`${taskTable ? 'border-blue-800' : 'border-transparent'} "text-sm font-semibold border-b-2 md:hover:border-blue-800 px-2 py-1 mb-0"`}>
+                      Tasks Table
+                    </button>
                   </li>
                 </ul>
               </div>
-              <button className="mr-5 text-xs font-semibold border-2 border-dashed border-blue-800 text-blue-800 hover:text-white bg-transparent hover:bg-blue-800 hover:border-transparent rounded-md px-2 py-1 mb-0">
+              <button className="mr-5 text-xs font-semibold border-2 border-dashed border-blue-800 text-blue-800 md:hover:text-white bg-transparent md:hover:bg-blue-800 md:hover:border-transparent rounded-md px-2 py-1 mb-0">
                   <Add style={{fontSize: '15px'}} /> Add Task
               </button>
             </div>
             :
-            'Select Project'
+            <div className="px-4 md:px-8 w-full h-[60vh] flex items-center justify-center border-t">
+              <div>
+                <img src="/images/pagePlaceholder-tablet.png" alt="Page placeholder image" className="w-[25rem]" />
+                <p className="text-center mt-12 text-xl font-semibold">Select a Project from the sidebar</p>
+              </div>
+            </div>
             }
 
           </div>
 
-
           {
             currentProject ?
-            projectOverview ?
-              // Project Overview
-                <section className="pt-8">
-                  <div className="headArea px-4 md:px-8 flex flex-col gap-6">
-                    Project Overview
+              projectOverview ?
+                // Project Overview
+                <div className="headArea pt-8 px-4 md:px-8 flex flex-col gap-6">
+                  {currentProject.name} <br /><br />
+                  {currentProject.description}<br /><br />
+                  {currentProject.created_by}<br /><br />
+                  {dateFormatter(currentProject.start_date)} - {dateFormatter(currentProject.end_date)}<br /><br />
+                  {currentProject.team_members}<br /><br />
+                  <div className="flex items-center gap-6">
+                    {filteredTeamMembers.map(member => {
+                      return (
+                        <div key={member.id}>
+                          <p>{member.full_name}</p>
+                          <p>{member.email}</p>
+                          <img src={member.avatar} alt={`${member.full_name}'s image`} className="w-12 h-12 rounded-full" />
+                        </div>
+                      )
+                    })}<br />
                   </div>
-                </section>
-            :
-              // Project Task Kanban
-              taskKanban ?
-                <KanbanBars />
+                </div>
               :
-                // Project Task Table
-                <section className="pt-8">
-                  <div className="headArea px-4 md:px-8 flex flex-col gap-6">
-                    Project tasks table
-                  </div>
-                </section>
+                // Project Task Kanban
+                taskKanban ?
+                  <KanbanBars />
+                :
+                  // Project Task Table
+                  <TaskList/>
             : null
           }
         </section>

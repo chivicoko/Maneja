@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { DeleteOutline, DescriptionOutlined, Edit, ForumOutlined, LinkOutlined, MoreHoriz, OutlinedFlag, PreviewOutlined } from "@mui/icons-material";
+import { DeleteOutline, DescriptionOutlined, Edit, ForumOutlined, LinkOutlined, MoreHoriz, OutlinedFlag, RemoveRedEye } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { Task, User } from '../../utils/types';
-import { fetchUsers } from '../../services/services';
+import { Task, User } from '../../../utils/types';
+import { fetchUsers } from '../../../services/services';
 import { useDrag, useDragLayer } from 'react-dnd';
-import { locallyAssignedMembers } from '../../utils/data';
-import TaskForm from './tasks/TaskForm';
+import { locallyAssignedMembers } from '../../../utils/data';
+import TaskForm from '../tasks/TaskForm';
 
 interface KanbanCardProps {
   task: Task;
@@ -70,26 +70,26 @@ const KanbanCard: React.FC<KanbanCardProps> = ({ task, status, dateFormatter, on
             <MoreHoriz fontSize="small" />
           </IconButton>
             {
-                isToggled &&
-                <div className='absolute top-12 right-0 h-fit w-fit py-1 whitespace-nowrap shadow-2xl border-2 rounded-lg bg-slate-100 z-40'>
-                    <ul>
-                        <li className=''>
-                            <a href="#" className='py-1 px-4 flex items-center gap-2 text-gray-600 hover:text-gray-600 cursor-pointer hover:bg-slate-200'>
-                                <PreviewOutlined style={{width: '16px'}} /> View
-                            </a>
-                        </li>
-                        <li className=''>
-                            <button onClick={handleOpenModal} className='w-full py-1 px-4 flex items-center gap-2 text-gray-600 cursor-pointer hover:bg-slate-200'>
-                                <Edit style={{width: '16px'}} /> Edit
-                            </button>
-                        </li>
-                        <li className=''>
-                            <button onClick={() => onDelete(task.id)} className='py-1 px-4 flex items-center gap-2 text-gray-600 cursor-pointer hover:bg-slate-200'>
-                                <DeleteOutline style={{width: '16px'}}/> Delete
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+              isToggled &&
+              <div className='absolute top-12 right-0 h-fit w-fit py-1 whitespace-nowrap shadow-2xl border-2 rounded-lg bg-slate-100 z-40'>
+                <ul>
+                  <li className=''>
+                    <a href="#" className='py-1 px-4 flex items-center gap-2 text-gray-600 hover:text-gray-600 cursor-pointer hover:bg-slate-200'>
+                      <RemoveRedEye style={{width: '16px'}} /> View
+                    </a>
+                  </li>
+                  <li className=''>
+                    <button onClick={handleOpenModal} className='w-full py-1 px-4 flex items-center gap-2 text-gray-600 cursor-pointer hover:bg-slate-200'>
+                      <Edit style={{width: '16px'}} /> Edit
+                    </button>
+                  </li>
+                  <li className=''>
+                    <button onClick={() => onDelete(task.id)} className='py-1 px-4 flex items-center gap-2 text-gray-600 cursor-pointer hover:bg-slate-200'>
+                      <DeleteOutline style={{width: '16px'}}/> Delete
+                    </button>
+                  </li>
+                </ul>
+              </div>
             }
         </div>
       </div>
@@ -149,10 +149,9 @@ const KanbanCard: React.FC<KanbanCardProps> = ({ task, status, dateFormatter, on
 };
 
 
-
 // Drag Preview Layer Component
 const KanbanCardDragLayer = () => {
-  const { isDragging, item, currentOffset } = useDragLayer(monitor => ({
+  const { isDragging, currentOffset } = useDragLayer(monitor => ({
     isDragging: monitor.isDragging(),
     item: monitor.getItem(),
     currentOffset: monitor.getClientOffset(),
@@ -167,7 +166,7 @@ const KanbanCardDragLayer = () => {
   const transform = `translate(${x-55}px, ${y-70}px)`;
 
   return (    
-    <div className="bg-white rounded-xl pt-2 fixed pointer-events-none top-0 left-0 z-50" style={{ transform }}>
+    <div className="bg-white rounded-xl pt-2 fixed pointer-events-none top-0 left-0 z-50 shadow-2xl" style={{ transform }}>
       <div className="px-2 w-full flex items-center justify-between">
         <div className={`rounded-md py-1 px-2 flex items-center gap-2 bg-gray-100`}>
           <span className={`w-2 h-2 rounded-full bg-gray-600`}></span>

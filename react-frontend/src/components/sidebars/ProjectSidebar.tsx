@@ -87,13 +87,13 @@ const ProjectSidebar: React.FC<SidebarProps> = ({ closeSidebar = () => {}, proje
                             <div className='w-full flex flex-col gap-2'>
                                 {projects.map(project => 
                                 <Link to={`/projects?id=${project.id}`} key={project.id} className={`${isProject(project.id) ? "text-white bg-blue-800" : "text-[#455454]"} w-full flex items-center justify-between text-[#455454] hover:text-white hover:bg-blue-800 border-2 border-gray-300 hover:border-transparent rounded-md text-sm font-semibold group transition-all duration-200 ease-linear`}>
-                                    <button onClick={() => handleProjectSelect(project.id)} className="w-full py-2 pr-1 pl-2 text-sm flex items-center justify-between gap-2">
+                                    <span onClick={() => handleProjectSelect(project.id)} className="w-full py-2 pr-1 pl-2 text-sm flex items-center justify-between gap-2">
                                         <span className='flex items-center gap-1'>
                                             <span className=""><Tungsten fontSize='small' /></span>
                                             <span className="font-semibold">{project.name.slice(0, 20)}</span>
                                         </span>
                                         <MoreVert/>
-                                    </button>
+                                    </span>
                                 </Link>
                                 )}
                             </div>

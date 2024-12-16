@@ -29,7 +29,7 @@ const AdminNavbar: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-1 md:gap-3 w-4/5 md:px-2 md:w-2/5 justify-self-start">
-            <div className="px-1 bg-transparent border border-blue-800 w-full flex items-center justify-between rounded-[4px] focus-within:ring-1 focus-within:ring-blue-800 hover:ring-blue-800">
+            <div className="px-1 bg-transparent border hover:border-blue-800 w-full flex items-center justify-between rounded-[4px] focus-within:ring-1 focus-within:ring-blue-800 hover:ring-blue-800">
               <input
                 type="text"
                 placeholder="Search..."

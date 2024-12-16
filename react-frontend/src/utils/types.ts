@@ -33,3 +33,28 @@ export interface kanbanBarProps {
   title: string;
   barIconBg: string;
 }
+
+export interface Bar {
+  id?: number;
+  title: string;
+  barIconBg: string;
+}
+
+export interface TableColumnProps {
+  bar: Bar;
+  fetchedTasks: Task[];
+  handleTaskDrop: (taskId: number, status: string) => void;
+  dateFormatter: (date: string) => string;
+  handleDeleteTask: (taskId: number) => void;
+  parsedProductId: number | null;
+  handleOpenModal: () => void;
+}
+
+export interface KanbanColumnProps {
+  bar: Bar;
+  tasks: Task[];
+  onTaskDrop: (taskId: number, newStatus: string) => Promise<void>;
+  onDeleteTask: (taskId: number) => Promise<void>;
+  dateFormatter: (date: string) => string;
+  handleOpenModal: () => void;
+}
