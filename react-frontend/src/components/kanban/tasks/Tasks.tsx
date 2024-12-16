@@ -38,9 +38,9 @@ const Tasks = () => {
 
   // Get the Current Project
   const query = useQuery();
-  const productId = query.get('id');
-  const parsedProductId = productId ? Number(productId) : null;
-  const currentProject = projects.find((project) => project.id === parsedProductId);
+  const projectId = query.get('id');
+  const parsedProjectId = projectId ? Number(projectId) : null;
+  const currentProject = projects.find((project) => project.id === parsedProjectId);
   // console.log(currentProject);
 
   
@@ -165,22 +165,36 @@ const Tasks = () => {
             currentProject ?
               projectOverview ?
                 // Project Overview
-                <div className="headArea pt-8 px-4 md:px-8 flex flex-col gap-6">
-                  {currentProject.name} <br /><br />
-                  {currentProject.description}<br /><br />
-                  {currentProject.created_by}<br /><br />
-                  {dateFormatter(currentProject.start_date)} - {dateFormatter(currentProject.end_date)}<br /><br />
-                  {currentProject.team_members}<br /><br />
-                  <div className="flex items-center gap-6">
-                    {filteredTeamMembers.map(member => {
-                      return (
-                        <div key={member.id}>
-                          <p>{member.full_name}</p>
-                          <p>{member.email}</p>
-                          <img src={member.avatar} alt={`${member.full_name}'s image`} className="w-12 h-12 rounded-full" />
-                        </div>
-                      )
-                    })}<br />
+                <div className="headArea pt-8 px-4 md:px-8 flex flex-col gap-6 border-t">
+                  {/* <h2 className="text-start text-xl font-semibold">Project Overview</h2> */}
+                  <div className="flex flex-col md:flex-row gap-16">
+                    <div className="w-1/2 self-center flex flex-col gap-6">
+                      <h3 className="text-xl font-semibold underline">{currentProject.name}</h3>
+                      <h3 className="">{currentProject.description}</h3>
+                      {/* <h3 className="">{currentProject.created_by}</h3> */}
+                      <div className="w-fit self-stretch flex items-center justify-start gap-6 bg-red-100 py-2 px-4 rounded-lg">
+                        <p>{dateFormatter(currentProject.start_date)}</p>
+                        <span>-</span>
+                        <p>{dateFormatter(currentProject.end_date)}</p>
+                      </div>
+                    </div>
+                    <div className="w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4 pr-5">
+                      {filteredTeamMembers.map(member => {
+                        return (
+                          <div key={member.id} className="h-[80px] rounded-lg relative bg-cover bg-center transform transition-transform duration-300 hover:-rotate-3 shadow-md hover:shadow-xl border">
+                            <img src="/images/2.jpeg" alt="search icon" className="rounded-lg h-full w-full relative" />
+                              
+                            <div className="bg-white shadow-md flex items-center justify-center gap-3 py-4 px-4 rounded-lg absolute w-full h-full top-0 left-0 bg-opacity-90">
+                              <img src={member.avatar} alt={`${member.full_name}'s image`} className="w-14 h-14 rounded-full" />
+                              <div>
+                                <p className="font-bold">{member.full_name}</p>
+                                <p className="text-sm font-semibold">{member.email}</p>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
                   </div>
                 </div>
               :
