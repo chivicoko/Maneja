@@ -10,7 +10,7 @@ interface SidebarProps {
   closeSidebar?: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ show = 'hidden'}) => {
+const Sidebar: React.FC<SidebarProps> = ({ show = 'hidden' }) => {
   // const [isModalOpen, setIsModalOpen] = useState(false);
   // const [modalMode, setModalMode] = useState<'view' | 'edit'>('view');
 

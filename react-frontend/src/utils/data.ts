@@ -12,3 +12,13 @@ export const locallyAssignedMembers = [
     { id: 4, avatar: "/images/pexels-photo-1222271@2x.png" },
     { id: 3, avatar: "/images/Layer 10@2x.png" },
 ]
+
+export const diagnosisHistory = [
+    { non_projects: 1, projects: 3, monthYear: 'Jan 2024' },
+    { non_projects: 8, projects: 16, monthYear: 'Jun 2023' },
+    { non_projects: 3, projects: 9, monthYear: 'May 2022' },
+    { non_projects: 13, projects: 20, monthYear: 'May 2021' },
+    { non_projects: 12, projects: 19, monthYear: 'May 2020' },
+    { non_projects: 3, projects: 9, monthYear: 'May 2019' },
+    { non_projects: 6, projects: 12, monthYear: 'May 2018' },
+];

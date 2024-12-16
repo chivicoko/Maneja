@@ -166,7 +166,6 @@ const Tasks = () => {
               projectOverview ?
                 // Project Overview
                 <div className="headArea pt-8 px-4 md:px-8 flex flex-col gap-6 border-t">
-                  {/* <h2 className="text-start text-xl font-semibold">Project Overview</h2> */}
                   <div className="flex flex-col md:flex-row gap-16">
                     <div className="w-1/2 self-center flex flex-col gap-6">
                       <h3 className="text-xl font-semibold underline">{currentProject.name}</h3>

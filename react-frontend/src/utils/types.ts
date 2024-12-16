@@ -58,3 +58,9 @@ export interface KanbanColumnProps {
   dateFormatter: (date: string) => string;
   handleOpenModal: () => void;
 }
+
+export interface ChartData {
+  monthYear: string;
+  systolic: number;
+  diastolic: number;
+}
